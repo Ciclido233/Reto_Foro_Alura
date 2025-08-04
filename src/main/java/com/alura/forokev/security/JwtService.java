@@ -40,6 +40,12 @@ public class JwtService {
 
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+
+        // Verifica que la clave tenga al menos 256 bits (32 bytes)
+        if (keyBytes.length < 32) {
+            throw new IllegalArgumentException("La clave secreta debe tener al menos 256 bits (32 caracteres)");
+        }
+
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
